@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会员注册页面</title>
+    <style>
+        span{
+            color: red;
+        }
+        p{
+            color: blue;
+        }
+        /* #vcode {
+				height: 35px;
+				width: 40%;
+				font-size: 15pt;
+				margin-left: 15%;
+				border-radius: 5px;
+				border: 1;
+				padding-left: 8px;
+			} */
+			#code {
+				color: #ffffff;
+				/*字体颜色白色*/
+				background-color: #000000;
+				font-size: 10pt;
+				font-family: "华康娃娃体W5";
+				padding: 5px 35px 10px 35px;
+				margin-left: 5%;
+				cursor: pointer;
+			}
+			#search_pass_link {
+				width: 70%;
+				text-align: right;
+				margin: 0 auto;
+				padding: 5px;
+			}
+			.btns {
+				width: 30%;
+				margin-left: 13%;
+				height: 40px;
+				border: 0;
+				font-size: 14pt;
+				font-family: 
+				"微软雅黑";
+				background-color: #FC5628;
+				color: #ffffff;
+				cursor: pointer;
+				/*设置指针鼠标的样式*/
+				border-radius: 20px;
+				/*设置圆角样式*/
+				border: 0;
+			}
+            
+    </style>
+</head>
+<body>
+    <p>欢迎注册会员</p>
+    <form action="URL" method="get">
+        <div>
+            <label for="phone">手机号码:</label>
+            <input type="text" id="phone" name="phone" placeholder="11位手机号">
+            <span>必填</span><br>
+        </div>
+        <div>
+            <label for="creatpwd">创建密码:</label>
+            <input type="text" id="creatpwd" name="creatpwd" placeholder="8位密码">
+            <span>必填</span><br>
+        </div>
+        <div>
+            <label for="registmail">注册邮箱:</label>
+            <input type="text" id="registmail" name="registmail" placeholder="例如：wustzz@sina.com">
+            <span>必填</span><br>
+        </div>
+        <div>
+            <div class="main_bar"></div>
+            <form action="login.html" onsubmit="return check()">
+                    <input type="text" id="vcode" placeholder="验证码" value="验证码" onfocus="this.value=''" onblur="if(this.value=='')this.value='验证码'" /><span id="code" title="看不清，换一张"></span>
+            </form>
+        </div>
+        <div>
+            <input type="radio" name="sex" value="male" checked="checked">男
+            <input type="radio" name="sex" value="female">女<br>
+        </div>
+        <div>
+            <label for="birthday">生日:</label>
+            <input type="text" id="birthday" name="birthday"><br>
+        </div>
+        <div>
+            籍贯：
+            <select name="big" id="big" size="1">
+                <option value="0" selected="selected">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+            <select name="small" id="small" size="1">
+                <option value="0" selected="selected">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select><br>
+        </div>
+        <div>
+            个人学历：
+            <select name="xueli" id="xueli" size="1">
+                <option value="0" selected="selected">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+        </div>
+        <div>
+            月薪：
+            <input type="range" id="money" name="money" min="0" max="10000" step="10" value="3000">
+            <span id="msg"></span>
+        </div>
+        <div>
+            个人爱好：
+            <label>
+                <input type="checkbox" name="like" value="sing">唱歌
+            </label>
+            <label>
+                 <input type="checkbox" name="like" id="run">跑步
+            </label>
+            <label>
+                <input type="checkbox" name="like" id="swim">游泳
+            </label>
+        </div>
+        <div>
+            个人照片：
+            <input type="file" name="myfile" accept="">
+        </div>
+        <div>
+            个人简介：
+            <textarea name="intro" id="intro" cols="50" rows="10"></textarea>
+        </div>
+        <div>
+            <input type="submit" value="提交">
+            <input type="reset" value="重填">
+        </div>
+    </form>
+</body>
+<script type="text/javascript">
+
+    var code; //声明一个变量用于存储生成的验证码
+    document.getElementById("code").onclick = changeImg;
+    function changeImg() {
+        var arrays = new Array(
+            '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+            'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+            'u', 'v', 'w', 'x', 'y', 'z',
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+            'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+            'U', 'V', 'W', 'X', 'Y', 'Z'
+        );
+        code = ''; //重新初始化验证码
+        //alert(arrays.length);
+        //随机从数组中获取四个元素组成验证码
+        for(var i = 0; i < 4; i++) {
+            //随机获取一个数组的下标
+            var r = parseInt(Math.random() * arrays.length);
+            code += arrays[r];
+        }
+        document.getElementById('code').innerHTML = code; //将验证码写入指定区域
+    }
+
+
+    //效验验证码(表单被提交时触发)
+    function check() {
+
+        //获取用户输入的验证码
+        var input_code = document.getElementById('vcode').value;
+        if(input_code.toLowerCase() == code.toLowerCase()) {
+            //验证码正确(表单提交)
+            return true;
+        }
+        alert("请输入正确的验证码!");
+        //验证码不正确,表单不允许提交
+
+        return false;
+
+    }
+
+    </script>
+</html>
